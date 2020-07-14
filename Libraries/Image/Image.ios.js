@@ -30,7 +30,7 @@ function getSize(
   uri: string,
   success: (width: number, height: number) => void,
   failure?: (error: any) => void,
-) {
+): void {
   NativeImageLoaderIOS.getSize(uri)
     .then(([width, height]) => success(width, height))
     .catch(
@@ -46,11 +46,9 @@ function getSizeWithHeaders(
   headers: {[string]: string, ...},
   success: (width: number, height: number) => void,
   failure?: (error: any) => void,
-): any {
-  return NativeImageLoaderIOS.getSizeWithHeaders(uri, headers)
-    .then(function(sizes) {
-      success(sizes.width, sizes.height);
-    })
+): void {
+  NativeImageLoaderIOS.getSizeWithHeaders(uri, headers)
+    .then(sizes => success(sizes.width, sizes.height))
     .catch(
       failure ||
         function() {
@@ -126,19 +124,17 @@ let Image = (props: ImagePropsType, forwardedRef) => {
 
   return (
     <ImageAnalyticsTagContext.Consumer>
-      {analyticTag => {
-        return (
-          <ImageViewNativeComponent
-            {...props}
-            ref={forwardedRef}
-            style={style}
-            resizeMode={resizeMode}
-            tintColor={tintColor}
-            source={sources}
-            internal_analyticTag={analyticTag}
-          />
-        );
-      }}
+      {analyticTag => (
+        <ImageViewNativeComponent
+          {...props}
+          ref={forwardedRef}
+          style={style}
+          resizeMode={resizeMode}
+          tintColor={tintColor}
+          source={sources}
+          internal_analyticTag={analyticTag}
+        />
+      )}
     </ImageAnalyticsTagContext.Consumer>
   );
 };

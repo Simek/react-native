@@ -157,11 +157,9 @@ function getSize(
   url: string,
   success: (width: number, height: number) => void,
   failure?: (error: any) => void,
-): any {
-  return NativeImageLoaderAndroid.getSize(url)
-    .then(function(sizes) {
-      success(sizes.width, sizes.height);
-    })
+): void {
+  NativeImageLoaderAndroid.getSize(url)
+    .then(sizes => success(sizes.width, sizes.height))
     .catch(
       failure ||
         function() {
@@ -181,11 +179,9 @@ function getSizeWithHeaders(
   headers: {[string]: string, ...},
   success: (width: number, height: number) => void,
   failure?: (error: any) => void,
-): any {
-  return NativeImageLoaderAndroid.getSizeWithHeaders(url, headers)
-    .then(function(sizes) {
-      success(sizes.width, sizes.height);
-    })
+): void {
+  NativeImageLoaderAndroid.getSizeWithHeaders(url, headers)
+    .then(sizes => success(sizes.width, sizes.height))
     .catch(
       failure ||
         function() {

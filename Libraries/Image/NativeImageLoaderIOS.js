@@ -15,16 +15,17 @@ import * as TurboModuleRegistry from '../TurboModule/TurboModuleRegistry';
 
 export interface Spec extends TurboModule {
   +getConstants: () => {||};
-  // Return [width, height] of image uri
-  +getSize: (uri: string) => Promise<$ReadOnlyArray<number>>;
+  +getSize: (
+    uri: string,
+    success: (width: number, height: number) => void,
+    failure?: (error: any) => void,
+  ) => void;
   +getSizeWithHeaders: (
     uri: string,
-    headers: Object,
-  ) => Promise<{
-    width: number,
-    height: number,
-    ...
-  }>;
+    headers: {[string]: string, ...},
+    success: (width: number, height: number) => void,
+    failure?: (error: any) => void,
+  ) => void;
   +prefetchImage: (uri: string) => Promise<boolean>;
   +queryCache: (uris: Array<string>) => Promise<Object>;
 }
